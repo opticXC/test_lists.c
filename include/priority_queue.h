@@ -1,4 +1,5 @@
 #pragma once
+#include <stdlib.h>
 
 typedef struct PNode {
 	int priority;
@@ -19,4 +20,4 @@ priority_node_t *priority_queue_dequeue(priority_queue_t *queue);
 
 priority_node_t *priority_queue_peek(priority_queue_t *queue);
 priority_node_t *priority_queue_search(priority_queue_t *queue, int data);
-int priority_queue_length(priority_queue_t *queue);
+size_t priority_queue_length(priority_queue_t *queue);

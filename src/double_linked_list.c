@@ -4,8 +4,7 @@
 
 double_linked_list_t *double_linked_list_create(){
 	double_linked_list_t *list = (double_linked_list_t *) malloc(sizeof(double_linked_list_t));
-	list->head = NULL;
-	list->tail = NULL;
+	list->head = list->tail = NULL;
 	return list;
 }
 

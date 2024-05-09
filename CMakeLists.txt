@@ -2,13 +2,21 @@ cmake_minimum_required(VERSION 3.10)
 project("Linked Lists" C)
 
 
-set(CMAKE_C_COMPILER "clang")
-set(CMAKE_CXX_COMPILER "clang++")
-set(CMAKE_C_FLAGS "-Wall -Wextra -Werror")
+
+set(CMAKE_C_FLAGS "-Wall -Wextra")
 set(CMAKE_C_FLAGS_DEBUG "-g")
 set(CMAKE_C_FLAGS_RELEASE "-O3 -march=native")
 
 
+if(BUILD_PLATFORM STREQUAL "x86_64")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
+endif()
+
+
+
+if(NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE "Debug")
+endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_C_STANDARD 17)
@@ -25,6 +33,16 @@ target_link_libraries(linked_list node)
 add_executable(test_linked_list test/test_linked_list.c)
 target_include_directories(test_linked_list PUBLIC include)
 target_link_libraries(test_linked_list linked_list)
+
+
+#circular singly linked list
+add_library(circular_linked_list src/circular_linked_list.c)
+target_include_directories(circular_linked_list PUBLIC include)
+target_link_libraries(circular_linked_list linked_list)
+
+add_executable(test_circular_linked_list test/test_circular_linked_list.c)
+target_include_directories(test_circular_linked_list PUBLIC include)
+target_link_libraries(test_circular_linked_list circular_linked_list)
 
 
 #basic linear stack

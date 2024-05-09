@@ -4,8 +4,7 @@
 
 linked_list_t *linked_list_create(){
 	linked_list_t *list = (linked_list_t *) malloc(sizeof(linked_list_t));
-	list->head = NULL;
-	list->tail = NULL;
+	list->head = list->tail = NULL;
 	list->length = 0;
 	return list;
 }
@@ -14,7 +13,7 @@ void linked_list_destroy(linked_list_t *list){
 	node_t *current = list->head;
 	while(current != NULL){
 		node_t *next = current->next;
-		destroy_node(current);
+		free(current);
 		current = next;
 	}
 	free(list);
@@ -23,8 +22,7 @@ void linked_list_destroy(linked_list_t *list){
 void linked_list_append(linked_list_t *list, int data){
 	node_t *node = create_node(data);
 	if(list->head == NULL){
-		list->head = node;
-		list->tail = node;
+		list->head = list->tail = node;
 	}else{
 		list->tail->next = node;
 		list->tail = node;
@@ -35,8 +33,7 @@ void linked_list_append(linked_list_t *list, int data){
 void linked_list_prepend(linked_list_t *list, int data){
 	node_t *node = create_node(data);
 	if(list->head == NULL){
-		list->head = node;
-		list->tail = node;
+		list->head = list->tail = node;
 	}else{
 		node->next = list->head;
 		list->head = node;
@@ -52,7 +49,7 @@ void linked_list_insert(linked_list_t *list, int data, size_t index){
 		linked_list_append(list, data);
 	}else{
 		node_t *current = list->head;
-		for(size_t i = 0; i < index - 1; i++){
+		for(size_t i = 0; i < index-1; i++){
 			current = current->next;
 		}
 		node_t *node = create_node(data);
@@ -80,13 +77,13 @@ void linked_list_remove_last(linked_list_t *list){
 			current = current->next;
 		}
 		if(previous == NULL){
-			list->head = NULL;
-			list->tail = NULL;
+			list->head = list->tail = NULL;
 		}else{
 			previous->next = NULL;
 			list->tail = previous;
 		}
 		destroy_node(current);
+		list->length--;
 	}
 }
 void linked_list_remove_at(linked_list_t *list, size_t index){
@@ -94,7 +91,7 @@ void linked_list_remove_at(linked_list_t *list, size_t index){
 		linked_list_remove_first(list);
 	}else if(index == list->length - 1){
 		linked_list_remove_last(list);
-	}else if(index < list->length){
+	}else if(index < list->length-1){
 		node_t *current = list->head;
 		node_t *previous = NULL;
 		for(size_t i = 0; i < index; i++){

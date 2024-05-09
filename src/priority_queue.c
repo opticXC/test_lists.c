@@ -3,9 +3,8 @@
 
 priority_queue_t *priority_queue_create(){
 	priority_queue_t *queue = (priority_queue_t *) malloc(sizeof(priority_queue_t));
-	if (queue){
-		queue->head = NULL;
-		queue->tail = NULL;
+	if (queue != NULL){
+		queue->head = queue->tail = NULL;
 	}
 	return queue;
 }
@@ -26,8 +25,7 @@ void priority_queue_enqueqe(priority_queue_t *queue, int data, int priority){
 }
 
 priority_node_t *priority_queue_dequeue(priority_queue_t *queue){
-	if (queue == NULL) return  NULL;
-	if (queue->head == NULL) return NULL;
+	if (queue == NULL || queue->head == NULL) return  NULL;
 
 	priority_node_t *prev = NULL;
 	priority_node_t *max = queue->head;
@@ -47,13 +45,18 @@ priority_node_t *priority_queue_dequeue(priority_queue_t *queue){
 		queue->tail = prev;
 	}
 	prev->next = max->next;
-	max->next = NULL;
 	return  max;
 }
 
 priority_node_t *priority_queue_peek(priority_queue_t *queue){
-	if(queue == NULL) return NULL;
-	return queue->head;
+	if(queue == NULL || queue->head == NULL) return NULL;
+	priority_node_t *max = queue->head;
+	priority_node_t *current = max->next;
+	while(current != NULL){
+		if(current->priority > max->priority) max = current;
+		current = current->next;
+	}
+	return max;
 }
 
 priority_node_t *priority_queue_search(priority_queue_t *queue, int data){
@@ -69,8 +72,8 @@ priority_node_t *priority_queue_search(priority_queue_t *queue, int data){
 	return  NULL;
 }
 
-int priority_queue_length(priority_queue_t *queue){
-	if(queue == NULL) return -1;
+size_t priority_queue_length(priority_queue_t *queue){
+	if(queue == NULL || queue->head == NULL) return 0;
 	int count = 0;
 	priority_node_t *current = queue->head;
 	while(current != NULL){

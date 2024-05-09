@@ -4,14 +4,9 @@
 
 
 void display(priority_queue_t *queue){
-	if(priority_queue_length(queue) <=0 ){
-		printf("Queue is empty\n");
-		return;
-	}
-
 	priority_node_t *node = queue->head;
 	while(node != NULL){
-		printf(" (%d, %d) %s", node->data, node->priority, (node->next == NULL)? "": "->");
+		printf("(%d,%d) ", node->data, node->priority);
 		node = node->next;
 	}
 	putchar('\n');
@@ -21,7 +16,6 @@ int main(){
 	priority_queue_t *queue = priority_queue_create();
 	priority_node_t *node = NULL;
 	int data = 0, priority = 0;
-
 	while (1) {
 		int op = 0;
 		printf("\033[H\033[J");
@@ -35,10 +29,8 @@ int main(){
 		scanf("%d", &op);
 
 		if(op == 1){
-			printf("Enter data: ");
-			scanf("\n%d", &data);
-			printf("Enter Priority: ");
-			scanf("\n%d", &priority);
+			printf("Enter data and priority: ");
+			scanf("\n%d %d", &data, &priority);
 			priority_queue_enqueqe(queue, data, priority);
 		}else if (op == 2){
 			node = priority_queue_dequeue(queue);
@@ -51,7 +43,7 @@ int main(){
 			if(node != NULL) printf("Peeked: (%d, %d)\n", node->data, node->priority);
 			else printf("Queue is empty\n");
 		}else if (op == 4){
-			printf("Lenght of Queue: %d\n", priority_queue_length(queue));
+			printf("Lenght of Queue: %lu\n", priority_queue_length(queue));
 		}else if (op == 5){
 			display(queue);
 			

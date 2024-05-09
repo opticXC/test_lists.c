@@ -23,6 +23,7 @@ int main(){
 	linked_list_append(list, 2);
 	linked_list_append(list, 5);
 	linked_list_append(list, 4);
+	linked_list_insert(list, 1, 3);
 	
 	print_linked_list(list);
 

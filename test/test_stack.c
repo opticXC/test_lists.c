@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_stack(stack_t *stk){
+void display(stack_t *stk){
 	if(stk->list->length == 0) {
 		printf("Stack is empty\n");
 		return;
@@ -16,10 +16,9 @@ void print_stack(stack_t *stk){
 
 int main(){
 	stack_t *stk = stack_create();
-	int data = 0;
 	node_t *node = NULL;
+	int data = 0, op = 0;
 	while(1){
-		int op = 0;
 		printf("\033[H\033[J");
 		printf("1) Push\n");
 		printf("2) Pop\n");
@@ -52,7 +51,7 @@ int main(){
 		}else if (op == 4){
 			printf("Lenght: %lu\n", stack_length(stk));
 		}else if (op == 5){
-			print_stack(stk);
+			display(stk);
 		}else if (op == 6){
 			break;
 		}
